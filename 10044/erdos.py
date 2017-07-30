@@ -10,25 +10,21 @@ if __name__ == "__main__":
         names = int(papers_and_names[1])
         infinity = papers + 10
 
-        authors_erdos = {"Erdos, P.": 0}
+        authors_erdos = {}
         proc_papers = []
 
         for paper in range(papers):
             paper = input()
-            paper = paper.split(":")[0]
+            paper = paper.split(".:")[0]
 
-            authors = paper.split(",")
-            authors = [(surname + ',' + name).strip() for surname,name in zip(authors[::2], authors[1::2])]
+            authors = paper.split("., ")
+            authors = [author + "." for author in authors]
             proc_papers.append(authors)
-            #initialize all possible base cases in one pass
             for author in authors:
-                erdos = False
-                if author == "Erdos, P.":
-                    erdos = True
-                else:
-                    authors_erdos[author] = 1 if erdos else infinity
+                authors_erdos[author] = infinity
+        authors_erdos["Erdos, P."] = 0
 
-        for n in range(papers + 1):
+        for n in range(min(papers, len(authors_erdos.keys()))):
             #print("Searching erdos {} coauthors".format(n))
             for (author, en) in authors_erdos.items():
                 #print("Doing {}".format((author, en)))
