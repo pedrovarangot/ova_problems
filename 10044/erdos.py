@@ -42,7 +42,7 @@ if __name__ == "__main__":
             if name not in authors_erdos.keys():
                 print(name + " infinity")
             else:
-                print(name + ' ' + (str(authors_erdos[name]) if authors_erdos[name] < 14 else "infinity"))
+                print(name + ' ' + (str(authors_erdos[name]) if authors_erdos[name] < infinity else "infinity"))
 
         #if case != cases - 1:
         #    input()
