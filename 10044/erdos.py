@@ -44,9 +44,9 @@ if __name__ == "__main__":
         for _ in range(names):
             name = input()
             if name not in authors_erdos.keys():
-                print("{} infinity".format(name))
+                print(name + " infinity")
             else:
-                print("{} {}".format(name, authors_erdos[name] if authors_erdos[name] < 14 else "infinity"))
+                print(name + ' ' + (str(authors_erdos[name]) if authors_erdos[name] < 14 else "infinity"))
 
         #if case != cases - 1:
         #    input()
