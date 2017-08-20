@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void do_erdos(unordered_map<string, int> &m, map<string, set<string> > &G);
+void do_erdos(unordered_map<string, int> &m, map<string, set<string> > &G, int current_erdos, set<string> current_authors);
 
 int main(int argc, char **argv) {
     int scenarios, papers, names;
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
         cout << "Scenario " << i + 1 << endl;
 
         m["Erdos, P."] = 0;
-        if(names > 0) do_erdos(m, G);
+        if(names > 0) do_erdos(m, G, 1, G["Erdos, P."]);
         for(int j = 0; j < names; j++) {
             getline(cin, input);
             if(m.find(input) != m.end() && m[input] < INT_MAX && m[input] >= 0) {
@@ -57,23 +57,18 @@ int main(int argc, char **argv) {
     }
 }
 
-void do_erdos(unordered_map<string, int> &m, map<string, set<string> > &G)
+void do_erdos(unordered_map<string, int> &m, map<string, set<string> > &G, int current_erdos, set<string> current_authors)
 {
-    int current_erdos = 1;
-    set<string> current_authors = G["Erdos, P."];
     set<string> next_authors;
 
-loop:
     for(auto it = current_authors.begin(); it != current_authors.end(); ++it) {
         if(m[*it] > current_erdos) m[*it] = current_erdos;
         for(auto jt = G[*it].begin(); jt != G[*it].end(); ++jt) {
             if(m[*jt] > current_erdos) next_authors.insert(*jt);
         }
     }
-    current_erdos++;
-    current_authors = next_authors;
-    next_authors.clear();
-    if(!current_authors.empty()) goto loop;
+
+    if(!current_authors.empty()) do_erdos(m, G, current_erdos + 1, next_authors);
 
     return;
 }
